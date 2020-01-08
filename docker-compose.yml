@@ -1,0 +1,16 @@
+version: '3.6'
+
+services:
+  docker-service:
+    build: .
+    image: mattipaksula/docker-service
+    environment:
+      - PORT=8888
+      - TARGET=nginx:80
+    volumes:
+      - ./app:/app
+    ports:
+      - 8888:8888
+
+  nginx:
+    image: nginx
