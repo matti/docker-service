@@ -8,7 +8,7 @@ _err() {
 
 _socat() {
   echo "$1 --> $2"
-  socat tcp-listen:$1,fork,reuseaddr tcp-connect:$2
+  exec socat tcp-listen:$1,fork,reuseaddr tcp-connect:$2
 }
 
 [ "${PORTS:-}" = "" ] && _err "PORTS unset"

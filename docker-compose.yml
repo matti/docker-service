@@ -3,7 +3,7 @@ version: "3.6"
 services:
   docker-service:
     build: .
-    image: mattipaksula/docker-service
+    image: mattipaksula/docker-service:v0.1.0
     environment:
       - PORTS=8888:nginx:80 9999:httpd:80
     volumes:
