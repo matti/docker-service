@@ -6,8 +6,18 @@ _err() {
   exit 1
 }
 
-[ "${PORT:-}" = "" ] && _err "PORT unset"
-[ "${TARGET:-}" = "" ] && _err "TARGET unset"
+_socat() {
+  echo "$1 --> $2"
+  socat tcp-listen:$1,fork,reuseaddr tcp-connect:$2
+}
 
-echo "$PORT --> $TARGET"
-exec socat tcp-listen:$PORT,fork,reuseaddr tcp-connect:$TARGET
+[ "${PORTS:-}" = "" ] && _err "PORTS unset"
+
+for pair in ${PORTS:-}; do
+  from=${pair%%:*}
+  to=${pair#*:}
+
+  _socat $from $to &
+done
+
+wait $(jobs -p)
